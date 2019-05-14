@@ -8,6 +8,7 @@
 
 ### 安装
 `pip install Pillow `
+
 `pip install matplotlib`
 
 ## 效果
