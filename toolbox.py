@@ -7,8 +7,14 @@ class Toolbox(object):
     """
     预定东北农业大学图书馆存柜及研修间
     """
-    def __init__(self, login_url, username, password, check_url, result_url):
-        self.login_url = login_url
+    def __init__(self, username: str, password: str, check_url: str, result_url: str):
+        """
+        类属性
+        :param username: 用户名, 一般为学号
+        :param password: 密码, 一般为身份证后6位
+        :param check_url: 测试Cookie, 用于检验用户信息及返回验证码
+        :param result_url: 用于请求数据, 判断状态
+        """
         self.result_url = result_url
         self.pic_url = "http://yd.lib.neau.edu.cn/public/captcha.html"
         self.check_url = check_url
@@ -19,7 +25,7 @@ class Toolbox(object):
             "password": password
         }
 
-    def post_data(self, post_key, num=1):
+    def post_data(self, post_key: str, num: int = 1):
         """
         用于post数据
         :param post_key: 若存柜则为"lc", 研修间则为"fjlx"
@@ -66,21 +72,20 @@ class Toolbox(object):
                 print(f"Post error! Error code:{result.status_code}")
 
     @classmethod
-    def cyd(cls, num=5):
+    def cyd(cls, username: str, password: str, num: int = 5):
         """
         存柜预定
         :param num: 存柜楼层
+        :param username: 用户名, 一般为学号
+        :param password: 密码, 一般为身份证后6位
         :return: None
         """
-        login_url = "http://yd.lib.neau.edu.cn/public/index/index/index.html"
-        username = "A05160308"
-        password = "303611"
         check_url = "http://yd.lib.neau.edu.cn/public/login.html"
         result_url = "http://yd.lib.neau.edu.cn/public/yd.html"
         i = 1
 
         while True:
-            cyd = cls(login_url, username, password, check_url, result_url)
+            cyd = cls(username, password, check_url, result_url)
             code, msg, data = cyd.post_data("lc", num)
             if code == 200:
                 print("-" * 50)
@@ -97,21 +102,20 @@ class Toolbox(object):
                 i += 1
 
     @classmethod
-    def yyd(cls, num=1):
+    def yyd(cls, username: str, password: str, num: int = 1):
         """
         预定研修间
+        :param username: 用户名, 一般为学号
+        :param password: 密码, 一般为身份证后6位
         :param num: 预定房间类型
         :return: None
         """
-        login_url = 'http://yd.lib.neau.edu.cn/public/index/yxj/main.html'
-        username = "A05160308"
-        password = "303611"
         check_url = "http://yd.lib.neau.edu.cn/public/ylogin.html"
         result_url = "http://yd.lib.neau.edu.cn/public/yyuding.html"
         i = 1
 
         while True:
-            yyd = cls(login_url, username, password, check_url, result_url)
+            yyd = cls(username, password, check_url, result_url)
             code, msg, data = yyd.post_data("fjlx", num)
             if code == 200:
                 print("-" * 50)
@@ -129,4 +133,4 @@ class Toolbox(object):
 
 
 if __name__ == "__main__":
-    Toolbox.cyd()
+    Toolbox.yyd("username", "password")
