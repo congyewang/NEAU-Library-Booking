@@ -7,7 +7,7 @@
 3. `Matplotlib`
 
 ### 安装依赖
-`pip install Pillow `
+`pip install PIL `
 
 `pip install matplotlib`
 
